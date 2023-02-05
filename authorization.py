@@ -12,34 +12,32 @@ async def authorization (bot, message):
     api_key = os.getenv('APIKEY')
     
     headers = {
-                "Authorization": f"Api-Key {api_key}",
+                "Authorization": f"API-KEY {api_key}",
                 'Content-Type': "application/json",
             }
     
     body = {
-            "id": message.from_user.id,
+            "telegramID": message.from_user.id,
             "key": key[1]
         }
     
-    end_point = '/link'
-    url = api_url + end_point
-    response = requests.post (url, headers = headers, json = body)
+    response = requests.post(api_url, headers = headers, json = body)
     
 
     if (response.status_code == None):
-        siteUrl = os.getenv('SITEURL')
         return await bot.send_message(message.from_user.id, "З’єднання із сервером тимчасово недоступне 😔\n"
                                                           + "Будь ласка, повторіть спробу пізніше.")
     try:
         response_data = response.json()
     except:
         return await bot.send_message(message.from_user.id, "З’єднання із сервером тимчасово недоступне 😔\n"
-                                                          + "Будь ласка, повторіть спробу пізніше.")
+                                                          + "Будь ласка, повторіть спробу пізніше!")
         
     if not (response.status_code == 200):
-        if (response_data['error_code'] == None):
+        if (response_data == None):
             return await bot.send_message(message.from_user.id, error_codes(""))
-        return await bot.send_message(message.from_user.id, error_codes(response_data['error_code']))
+        return await bot.send_message(message.from_user.id, error_codes(response_data))
+    siteUrl = os.getenv('SITEURL')
     markup = types.InlineKeyboardMarkup()
     linked_btn = types.InlineKeyboardButton("Перейти до веб-профілю 🌐", url = siteUrl)
     markup.add(linked_btn)

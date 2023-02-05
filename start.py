@@ -15,7 +15,7 @@ load_dotenv()
 token = os.getenv('TOKEN')
 bot = AsyncTeleBot(token)
 
-@bot.message_handler(commands=['help', 'start'])
+@bot.message_handler(commands=['start'])
 async def send_welcome(message):
     await authorization(bot, message)
     await mainpage(bot, message)

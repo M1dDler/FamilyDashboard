@@ -9,17 +9,13 @@ async def getBalance(bot, message):
     api_key = os.getenv('APIKEY')
 
     headers = {
-                 "Authorization": f"Api-Key {api_key}",
+                 "Authorization": f"API-KEY {api_key}",
                  'Content-Type': "application/json",
               }
     
-    body = {
-              "id": message.from_user.id
-           }
-    
-    end_point = '/user'
+    end_point = '/' + str(message.from_user.id)
     url = api_url + end_point
-    response = requests.get (url, headers = headers, json = body)
+    response = requests.get (url, headers = headers)
 
     if (response.status_code == None):
         return await bot.send_message(message.from_user.id, "З’єднання із сервером тимчасово недоступне 😔\n"
@@ -28,16 +24,16 @@ async def getBalance(bot, message):
         response_data = response.json()
     except:
         await bot.send_message(message.from_user.id, "З’єднання із сервером тимчасово недоступне 😔\n"
-                                                          + "Будь ласка, повторіть спробу пізніше.")
+                                                          + "Будь ласка, повторіть спробу пізніше!")
         return None
     
     if not (response.status_code == 200):
-        if (response_data['error_code'] == None):
+        if (response_data == None):
             await bot.send_message(message.from_user.id, error_codes(""))
             return None
-        await bot.send_message(message.from_user.id, error_codes(response_data['error_code']))
+        await bot.send_message(message.from_user.id, error_codes(response_data))
         return None
-    return (response.json()['user']['balance']) / 100
+    return (response.json()['balance']) / 100
 
 
 async def getPaymentData(bot, message):
@@ -46,17 +42,13 @@ async def getPaymentData(bot, message):
     api_key = os.getenv('APIKEY')
 
     headers = {
-                 "Authorization": f"Api-Key {api_key}",
+                 "Authorization": f"API-KEY {api_key}",
                  'Content-Type': "application/json",
               }
     
-    body = {
-              "id": message.from_user.id
-           }
-    
-    end_point = '/user'
+    end_point = '/' + str(message.from_user.id)
     url = api_url + end_point
-    response = requests.get (url, headers = headers, json = body)
+    response = requests.get (url, headers = headers)
     
     if (response.status_code == None):
         return await bot.send_message(message.from_user.id, "З’єднання із сервером тимчасово недоступне 😔\n"
@@ -65,17 +57,17 @@ async def getPaymentData(bot, message):
         response_data = response.json()
     except:
         await bot.send_message(message.from_user.id, "З’єднання із сервером тимчасово недоступне 😔\n"
-                                                          + "Будь ласка, повторіть спробу пізніше.")
+                                                          + "Будь ласка, повторіть спробу пізніше!")
         return None
     
     if not (response.status_code == 200):
-        if (response_data['error_code'] == None):
+        if (response_data == None):
             await bot.send_message(message.from_user.id, error_codes(""))
             return None
-        await bot.send_message(message.from_user.id, error_codes(response_data['error_code']))
+        await bot.send_message(message.from_user.id, error_codes(response_data))
         return None
-    return {'id' : response.json()['user']['_id'],
-            'paymentLink' : response.json()['user']['paymentLink']}
+    return {'id' : response.json()['_id'],
+            'paymentLink' : response.json()['paymentLink']}
     
     
 async def getSubscribes(bot, message):
@@ -84,17 +76,13 @@ async def getSubscribes(bot, message):
     api_key = os.getenv('APIKEY')
 
     headers = {
-                 "Authorization": f"Api-Key {api_key}",
+                 "Authorization": f"API-KEY {api_key}",
                  'Content-Type': "application/json",
               }
     
-    body = {
-              "id": message.from_user.id
-           }
-    
-    end_point = '/user'
+    end_point = '/' + str(message.from_user.id)
     url = api_url + end_point
-    response = requests.get (url, headers = headers, json = body)
+    response = requests.get (url, headers = headers)
     
     if (response.status_code == None):
         return await bot.send_message(message.from_user.id, "З’єднання із сервером тимчасово недоступне 😔\n"
@@ -103,16 +91,16 @@ async def getSubscribes(bot, message):
         response_data = response.json()
     except:
         await bot.send_message(message.from_user.id, "З’єднання із сервером тимчасово недоступне 😔\n"
-                                                          + "Будь ласка, повторіть спробу пізніше.")
+                                                          + "Будь ласка, повторіть спробу пізніше!")
         return None
     
     if not (response.status_code == 200):
-        if (response_data['error_code'] == None):
+        if (response_data == None):
             await bot.send_message(message.from_user.id, error_codes(""))
             return None
-        await bot.send_message(message.from_user.id, error_codes(response_data['error_code']))
+        await bot.send_message(message.from_user.id, error_codes(response_data))
         return None
-    return (response.json()['user']['subscriptions'])
+    return (response.json()['subscriptions'])
 
 
 async def getTransactions(bot, message):
@@ -121,17 +109,13 @@ async def getTransactions(bot, message):
     api_key = os.getenv('APIKEY')
 
     headers = {
-                 "Authorization": f"Api-Key {api_key}",
+                 "Authorization": f"API-KEY {api_key}",
                  'Content-Type': "application/json",
               }
     
-    body = {
-              "id": message.from_user.id
-           }
-    
-    end_point = '/user'
+    end_point = '/' + str(message.from_user.id)
     url = api_url + end_point
-    response = requests.get (url, headers = headers, json = body)
+    response = requests.get (url, headers = headers)
     
     if (response.status_code == None):
         return await bot.send_message(message.from_user.id, "З’єднання із сервером тимчасово недоступне 😔\n"
@@ -140,13 +124,13 @@ async def getTransactions(bot, message):
         response_data = response.json()
     except:
         await bot.send_message(message.from_user.id, "З’єднання із сервером тимчасово недоступне 😔\n"
-                                                          + "Будь ласка, повторіть спробу пізніше.")
+                                                          + "Будь ласка, повторіть спробу пізніше!")
         return None
     
     if not (response.status_code == 200):
-        if (response_data['error_code'] == None):
+        if (response_data == None):
             await bot.send_message(message.from_user.id, error_codes(""))
             return None
-        await bot.send_message(message.from_user.id, error_codes(response_data['error_code']))
+        await bot.send_message(message.from_user.id, error_codes(response_data))
         return None
-    return (response.json()['user']['transactions'])
+    return (response.json()['transactions'])
