@@ -23,8 +23,8 @@ async def send_welcome(message):
 
 
 @bot.message_handler(content_types=['text', 'audio', 'document', 'photo', 'sticker', 'video', 'voice', 'video_note'])
-async def textMessage(message):  
-    if message.content_type == {"text"}:
+async def textMessage(message):
+    if message.content_type == 'text':
     
         if message.text == "Веб-профіль 🖥":
             return await web_site(bot, message)
