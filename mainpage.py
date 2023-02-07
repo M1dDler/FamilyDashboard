@@ -10,4 +10,5 @@ async def mainpage(bot, message):
     site_btn = types.KeyboardButton("Веб-профіль 🖥")
     unlinkTelegram_btn = types.KeyboardButton("Відв’язка Telegram 🔓")
     markup.add(site_btn, subscribe_btn, balance_btn, transaction_btn, unlinkTelegram_btn)
-    await bot.send_message(message.from_user.id, "Оберіть те, що вас цікавить! 😇", reply_markup=markup)
+    await bot.send_message(message.from_user.id, "Оберіть те, що вас цікавить! 😋\n"+
+                           "Для зв’язку із адміністрацією пишіть запитання в чат 😇", reply_markup=markup)

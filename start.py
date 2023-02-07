@@ -10,6 +10,7 @@ from transaction import *
 from authorization import *
 from unlinkTelegram import *
 from mainpage import *
+from support import *
 
 load_dotenv()    
 token = os.getenv('TOKEN')
@@ -21,28 +22,31 @@ async def send_welcome(message):
     await mainpage(bot, message)
 
 
-@bot.message_handler(content_types={"text"})
+@bot.message_handler(content_types=['text', 'audio', 'document', 'photo', 'sticker', 'video', 'voice', 'video_note'])
 async def textMessage(message):  
+    if message.content_type == {"text"}:
     
-    if message.text == "Веб-профіль 🖥":
-        await web_site(bot, message)
-        
-    if message.text == "Баланс коштів 💳":
-        await balance(bot, message)
+        if message.text == "Веб-профіль 🖥":
+            return await web_site(bot, message)
+            
+        if message.text == "Баланс коштів 💳":
+            return await balance(bot, message)
 
-    if message.text == "Мої підписки 📝":
-        await subscribe(bot, message)
+        if message.text == "Мої підписки 📝":
+            return await subscribe(bot, message)
+            
+        if message.text == "Мої транзакції 🔖":
+            return await transaction(bot, message)
+            
+        if message.text == "Відв’язка Telegram 🔓":
+            markup = types.InlineKeyboardMarkup()
+            accept_unlinkTelegram = types.InlineKeyboardButton("1. Підтвердити ✅", callback_data = "accept unlinkTelegram")
+            degree_unlinkTelegram = types.InlineKeyboardButton("2. Скасувати ❌", callback_data = "degree unlinkTelegram")
+            markup.add(accept_unlinkTelegram, degree_unlinkTelegram)
+            return await bot.send_message(message.from_user.id, "Ви дійсно бажаєте відв’язати свій аккаунт Telegram від веб-сайту? 🤔", reply_markup=markup)
         
-    if message.text == "Мої транзакції 🔖":
-        await transaction(bot, message)
-        
-    if message.text == "Відв’язка Telegram 🔓":
-        markup = types.InlineKeyboardMarkup()
-        accept_unlinkTelegram = types.InlineKeyboardButton("1. Підтвердити ✅", callback_data = "accept unlinkTelegram")
-        degree_unlinkTelegram = types.InlineKeyboardButton("2. Скасувати ❌", callback_data = "degree unlinkTelegram")
-        markup.add(accept_unlinkTelegram, degree_unlinkTelegram)
-        await bot.send_message(message.from_user.id, "Ви дійсно бажаєте відв’язати свій аккаунт Telegram від веб-сайту? 🤔", reply_markup=markup)
-
+        return await support(bot, message)
+    return await support(bot, message)
 
 @bot.callback_query_handler(func=lambda query: True)
 async def balance_calldata(query):
