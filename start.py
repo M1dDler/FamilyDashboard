@@ -64,4 +64,4 @@ async def balance_calldata(query):
     if (query.data == "degree unlinkTelegram"):
         await bot.edit_message_reply_markup(query.from_user.id, query.json['message']['message_id'], reply_markup=None)
 
-asyncio.run(bot.polling())
+asyncio.run(bot.infinity_polling())
