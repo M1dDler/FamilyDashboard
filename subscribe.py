@@ -12,5 +12,5 @@ async def subscribe(bot, message):
     for sub in subscribes:
         text +=  ( "#️⃣ ID підписки: "+sub['_id']+"\n"
                 +  "📝 Назва підписки: " +sub['title']+"\n" 
-                +  "💰 Вартість підписки: " +str(sub['cost'] / 100)+ " грн/міс. \n")
+                +  "💰 Вартість підписки: " +str(sub['cost'] / 100)+ " грн/міс. \n\n\n")
     await bot.send_message(message.from_user.id, text)
