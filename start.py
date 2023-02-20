@@ -11,6 +11,7 @@ from authorization import *
 from unlinkTelegram import *
 from mainpage import *
 from support import *
+from Web.webFlask import keep_alive
 
 load_dotenv()    
 token = os.getenv('TOKEN')
@@ -64,4 +65,5 @@ async def balance_calldata(query):
     if (query.data == "degree unlinkTelegram"):
         await bot.edit_message_reply_markup(query.from_user.id, query.json['message']['message_id'], reply_markup=None)
 
+keep_alive()
 asyncio.run(bot.infinity_polling())
